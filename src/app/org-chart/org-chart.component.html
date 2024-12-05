@@ -1,0 +1,11 @@
+<div class="org-chart-container">
+    <ng-select 
+      [items]="searchOptions"
+      bindLabel="label"
+      bindValue="value"
+      placeholder="Search employees"
+      (change)="onSearchSelect($event)">
+    </ng-select>
+    
+    <div #d3Container class="d3-chart-container"></div>
+  </div>
