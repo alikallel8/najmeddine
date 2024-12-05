@@ -1,64 +1,141 @@
-/* org-chart.component.css */
-.org-chart-container {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .d3-chart-container {
-    width: 100%;
-    height: 100%;
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #ec6608;
+    --text-color: #3b4a56;
+    --background-color: #f4f6f7;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
   }
   
   body {
-    overflow-y: hidden !important;
+    overflow-y: auto !important;
+    background-color: var(--background-color);
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .org-chart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .d3-chart-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed);
   }
   
   .node-card__wrapper {
-    background-color: #fff;
-    box-shadow: 0px 1px 3px 0px rgb(0 0 0 / 20%), 
-                0px 1px 1px 0px rgb(0 0 0 / 14%), 
-                0px 2px 1px -1px rgb(0 0 0 / 12%);
-    border-radius: 4px;
-    cursor: default;
-    margin: 5px;
+    background-color: white;
+    box-shadow: var(--card-shadow);
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
     display: flex;
     flex-direction: column;
+    transition: all var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .node-card__wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   
   .node-card__name {
-    background-color: transparent;
-    border: none;
-    overflow: hidden;
-    outline: none;
-    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px 4px 0 0;
   }
   
   .node-card__name > h3 {
-    font-size: 15px;
-    color: #3b4a56;
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
   }
   
   .node-card__type {
     align-self: center;
-    display: flex;
-    justify-content: center;
-    padding: 1px;
-    min-width: 70px;
-    height: auto;
-    color: #fff;
-    border-radius: 30px;
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 12px 0;
+    color: white;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
     font-size: 14px;
-    background-color: #ec6608;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
   
   .node-card__details {
-    padding-left: 30px;
-    line-height: 12px;
-    background: #3b4a56;
-    color: #fff;
-    opacity: 0.9;
-    margin: 15px 0;
+    background-color: var(--background-color);
+    padding: 12px;
+  }
+  
+  .node-card__element {
+    margin: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+  .node-card__element b {
+    opacity: 0.7;
+    margin-right: 10px;
+  }
+  
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 300px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f4f6f7;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed);
+  }
+  
+  .search-input:focus {
+    outline: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .node-subordinates-badge {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .node-card__wrapper {
+      margin: 5px;
+    }
+    
+    .node-card__name > h3 {
+      font-size: 14px;
+    }
+    
+    .node-card__type {
+      font-size: 12px;
+    }
+    
+    .search-input {
+      width: 100%;
+    }
   }
