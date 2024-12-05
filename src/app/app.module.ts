@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';  // Add this import
 
 import { AppComponent } from './app.component';
 import { OrgChartComponent } from './org-chart/org-chart.component';
-
+// github is easy
 @NgModule({
   declarations: [
     AppComponent,
