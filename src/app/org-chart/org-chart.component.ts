@@ -10,7 +10,13 @@ interface OrgChartData {
   positionName: string;
   office: string;
   manager?: string;
+  imageUrl?: string;
+  area?: string;
+  parentId?: string | null;
   _directSubordinates?: number;
+  isLoggedUser?: boolean;
+  tags?: string;
+  profileUrl?: string;
   children?: OrgChartData[];
 }
 
@@ -46,22 +52,78 @@ export class OrgChartComponent implements OnInit {
   }
 
   loadChartData() {
-    this.http.get('https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv', { responseType: 'text' })
-      .subscribe(csvData => {
-        const parsedData = Papa.parse(csvData, { header: true }).data as OrgChartData[];
-        this.data = parsedData
-          .filter(item => item.name)
-          .map(item => ({
-            ...item,
-            _directSubordinates: this.getDirectSubordinates(item.id, parsedData)
-          }));
-        this.renderChart();
-      });
+    this.data = [
+      {
+        id: "O-6066",
+        name: "Ian Devling",
+        positionName: "Chief Executive Officer",
+        imageUrl: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/cto.jpg",
+        area: "Corporate",
+        profileUrl: "http://example.com/employee/profile",
+        office: "CTO office",
+        tags: "Ceo,tag1,manager,cto",
+        isLoggedUser: false,
+        parentId: null, // Root node
+      },
+      {
+        id: "O-6067",
+        name: "Davolio Nancy",
+        positionName: "CTO",
+        imageUrl: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
+        area: "Corporate",
+        profileUrl: "http://example.com/employee/profile",
+        office: "CEO office",
+        tags: "Ceo,tag1, tag2",
+        isLoggedUser: false,
+        parentId: "O-6066", // Child of O-6066
+      },
+      {
+        id: "O-6068",
+        name: "Leverling Janet",
+        positionName: "CTO",
+        imageUrl: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/female.jpg",
+        area: "Corporate",
+        profileUrl: "http://example.com/employee/profile",
+        office: "CEO office",
+        tags: "Ceo,tag1, tag2",
+        isLoggedUser: false,
+        parentId: "O-6066", // Child of O-6066
+      },
+      {
+        id: "O-6072",
+        name: "Fuller Andrew",
+        positionName: "Linear Manager",
+        imageUrl: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
+        area: "Corporate",
+        profileUrl: "http://example.com/employee/profile",
+        office: "CEO office",
+        tags: "Ceo,tag1, tag2",
+        isLoggedUser: false,
+        parentId: "O-6067", // Child of O-6067
+      },
+      {
+        id: "O-6090",
+        name: "Alice Bees",
+        positionName: "Developer",
+        imageUrl: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
+        area: "Corporate",
+        profileUrl: "http://example.com/employee/profile",
+        office: "CEO office",
+        tags: "Ceo,tag1, tag2",
+        isLoggedUser: false,
+        parentId: "O-6068", // Child of O-6067
+      },
+    ];
+    
+  
+    this.renderChart();
   }
+  
 
   getDirectSubordinates(managerId: string, data: OrgChartData[]): number {
     return data.filter(item => item.manager === managerId).length;
   }
+  
 
   renderChart() {
     if (!this.chart) {
